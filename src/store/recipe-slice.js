@@ -20,6 +20,21 @@ const recipesSlice = createSlice({
     addRecipeOnHashChange(state, action) {
       state.recipe = action.payload;
     },
+    addBookmarks(state, action) {
+      state.bookmarks.push(action.payload);
+
+      if (action.payload.recipeId === state.recipe.recipeID)
+        state.recipe.payload.bookmarked = true;
+    },
+    deleteBookmarks(state, action) {
+      const index = state.bookmarks.findIndex(
+        (el) => el.recipeId === action.payload
+      );
+      console.log(index);
+      state.bookmarks.splice(index, 1);
+      if (action.payload === state.recipe.recipeId)
+        state.recipe.payload.bookmarked = false;
+    },
   },
 });
 

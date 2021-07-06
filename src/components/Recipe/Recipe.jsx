@@ -1,14 +1,19 @@
 import React from "react";
-import { ReactComponent as TimeToCook } from "../../misc/svg/time.svg";
-import { ReactComponent as ServingToCook } from "../../misc/svg/serving.svg";
+import { recipesActions } from "../../store/recipe-slice";
+import { ReactComponent as Bookmark } from "../../misc/svg/bookmark.svg";
+import { ReactComponent as Star } from "../../misc/svg/star.svg";
 import Spinner from "../UI/Spinner/Spinner";
 import styles from "./Recipe.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const Recipe = () => {
   const recipe = useSelector((state) => state.recipe.recipe);
+  const dispatch = useDispatch();
+  const hasRecipe = Object.keys(recipe).length === 0;
+  console.log(hasRecipe);
+
   const shouldRecipeSpin = useSelector((state) => state.loading.recipe);
-  console.log(shouldRecipeSpin);
   const newRecipe = {
+    bookmarked: recipe.payload.bookmarked,
     title: recipe.payload.title,
     publisher: recipe.payload.publisher,
     publisherUrl: recipe.payload.publisher_url,
@@ -19,6 +24,15 @@ const Recipe = () => {
     ingredients: recipe.payload.ingredients,
   };
 
+  const addBookmarkHandler = () => {
+    if (!newRecipe.bookmarked) {
+      dispatch(recipesActions.addBookmarks({ payload: newRecipe }));
+    } else {
+      dispatch(recipesActions.deleteBookmarks({ payload: newRecipe.recipeId }));
+    }
+  };
+  console.log(recipe);
+  console.log(newRecipe);
   return (
     <React.Fragment>
       {shouldRecipeSpin ? (
@@ -31,12 +45,16 @@ const Recipe = () => {
           </div>
           <div className={styles.recipeCookInfo}>
             <div className={styles.recipeTime}>
-              <TimeToCook className={styles.recipeTimeSvg} />
-              <span>75 Minutes</span>
+              <Star className={styles.recipeTimeSvg} />
+              <span>{newRecipe.socialRank}</span>
             </div>
             <div className={styles.recipeServing}>
-              <ServingToCook className={styles.recipeServingSvg} />
-              <span>4 Servings</span>
+              <button
+                onClick={addBookmarkHandler}
+                className={styles.recipeBookmarkButton}
+              >
+                <Bookmark className={styles.recipeServingSvg} />
+              </button>
             </div>
           </div>
 

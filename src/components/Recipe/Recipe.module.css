@@ -108,4 +108,17 @@
 .recipeTimeSvg,
 .recipeServingSvg {
   height: 5rem;
+  width: 5rem;
+}
+
+.recipeTimeSvg {
+  fill: gold;
+  margin-right: 1rem;
+}
+
+.recipeBookmarkButton{
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }

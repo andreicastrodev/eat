@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Header />
       <Results />
-      {hasRecipe ? null : <Recipe />}
+      {hasRecipe ? <p>Search Now : )</p> : <Recipe />}
     </div>
   );
 }

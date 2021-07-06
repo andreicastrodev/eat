@@ -145,3 +145,11 @@
   font-size: 1.3rem;
   color: #918581;
 }
+
+.headerBookmarkMessage {
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 3rem;
+  text-align: center;
+}
